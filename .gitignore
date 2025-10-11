@@ -1,0 +1,15 @@
+node_modules/
+.env
+**/.env
+/.next
+dist
+build
+/*.log
+/.turbo
+/.DS_Store
+
+# Turborepo
+.turbo/
+turbo-dev.log
+turbo.db
+turbo-debug.log
