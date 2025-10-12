@@ -1,16 +1,16 @@
 "use client";
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-import { Form, FormField, FormLabel, FormMessage } from '@/components/ui/Form';
-import Input from '@/components/ui/Input';
-import Textarea from '@/components/ui/Textarea';
-import Button from '@/components/ui/Button';
+import { Form, FormField, FormLabel, FormMessage } from "@/components/ui/Form";
+import Input from "@/components/ui/Input";
+import Textarea from "@/components/ui/Textarea";
+import Button from "@/components/ui/Button";
 
 const schema = z.object({
-  name: z.string().min(1, 'Name is required'),
+  name: z.string().min(1, "Name is required"),
   description: z.string().optional(),
   priceCents: z.number().min(0),
   sku: z.string().optional(),
@@ -28,20 +28,31 @@ type Props = {
   updateProduct?: (id: number, payload: Partial<FormValues>) => Promise<void>;
 };
 
-export default function ProductForm({ onSaved, editing, createProduct, updateProduct }: Props) {
+export default function ProductForm({
+  onSaved,
+  editing,
+  createProduct,
+  updateProduct,
+}: Props) {
   const form = useForm<FormValues>({
     // @ts-expect-error resolver typing mismatch
     resolver: zodResolver(schema),
-    defaultValues: { name: '', description: '', priceCents: 0, sku: '', stock: 0 },
+    defaultValues: {
+      name: "",
+      description: "",
+      priceCents: 0,
+      sku: "",
+      stock: 0,
+    },
   });
 
   useEffect(() => {
     if (editing) {
       form.reset({
-        name: editing.name || '',
-        description: editing.description || '',
+        name: editing.name || "",
+        description: editing.description || "",
         priceCents: editing.priceCents ?? 0,
-        sku: editing.sku || '',
+        sku: editing.sku || "",
         stock: editing.stock ?? 0,
       });
     }
@@ -60,37 +71,95 @@ export default function ProductForm({ onSaved, editing, createProduct, updatePro
 
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)}>
-      <div className="space-y-2 max-w-xl">
+      <div className="max-w-2xl mx-auto p-7 bg-white rounded-2xl shadow-lg space-y-6">
+        <h2 className="text-5xl font-semibold flex justify-center text-gray-800">
+          {editing ? "Edit Product" : "Create Product"}
+        </h2>
+
+        {/* Name */}
         <FormField>
-          <FormLabel>Name</FormLabel>
-          <Input {...form.register('name' as const)} />
-          {form.formState.errors.name && <FormMessage>{form.formState.errors.name.message}</FormMessage>}
+          <FormLabel className="font-medium text-gray-700">Name</FormLabel>
+          <Input
+            {...form.register("name" as const)}
+            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 text-gray-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 "
+            placeholder="Enter product name"
+          />
+          {form.formState.errors.name && (
+            <FormMessage className="text-red-500 text-sm mt-1">
+              {form.formState.errors.name.message}
+            </FormMessage>
+          )}
         </FormField>
 
+        {/* Description */}
         <FormField>
-          <FormLabel>Description</FormLabel>
-          <Textarea {...form.register('description' as const)} />
-          {form.formState.errors.description && <FormMessage>{form.formState.errors.description.message}</FormMessage>}
+          <FormLabel className="font-medium text-gray-700">
+            Description
+          </FormLabel>
+          <Textarea
+            {...form.register("description" as const)}
+            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 text-gray-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            placeholder="Enter product description"
+            rows={4}
+          />
+          {form.formState.errors.description && (
+            <FormMessage className="text-red-500 text-sm mt-1">
+              {form.formState.errors.description.message}
+            </FormMessage>
+          )}
         </FormField>
 
+        {/* Price */}
         <FormField>
-          <FormLabel>Price (cents)</FormLabel>
-          <Input type="number" {...form.register('priceCents' as const, { valueAsNumber: true })} />
-          {form.formState.errors.priceCents && <FormMessage>{form.formState.errors.priceCents.message}</FormMessage>}
+          <FormLabel className="font-medium text-gray-700">
+            Price (cents)
+          </FormLabel>
+          <Input
+            type="number"
+            {...form.register("priceCents" as const, { valueAsNumber: true })}
+            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 text-gray-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            placeholder="e.g., 1000"
+          />
+          {form.formState.errors.priceCents && (
+            <FormMessage className="text-red-500 text-sm mt-1">
+              {form.formState.errors.priceCents.message}
+            </FormMessage>
+          )}
         </FormField>
 
+        {/* SKU */}
         <FormField>
-          <FormLabel>SKU</FormLabel>
-          <Input {...form.register('sku' as const)} />
+          <FormLabel className="font-medium text-gray-700">SKU</FormLabel>
+          <Input
+            {...form.register("sku" as const)}
+            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 text-gray-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            placeholder="Enter SKU code"
+          />
         </FormField>
 
+        {/* Stock */}
         <FormField>
-          <FormLabel>Stock</FormLabel>
-          <Input type="number" {...form.register('stock' as const, { valueAsNumber: true })} />
-          {form.formState.errors.stock && <FormMessage>{form.formState.errors.stock.message}</FormMessage>}
+          <FormLabel className="font-medium text-gray-700">Stock</FormLabel>
+          <Input
+            type="number"
+            {...form.register("stock" as const, { valueAsNumber: true })}
+            className="mt-1 w-full rounded-md border border-gray-300 px-4 py-2 text-gray-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            placeholder="e.g., 50"
+          />
+          {form.formState.errors.stock && (
+            <FormMessage className="text-red-500 text-sm mt-1">
+              {form.formState.errors.stock.message}
+            </FormMessage>
+          )}
         </FormField>
 
-        <Button type="submit">{editing ? 'Update' : 'Create'}</Button>
+        {/* Submit Button */}
+        <Button
+          type="submit"
+          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+        >
+          {editing ? "Update Product" : "Create Product"}
+        </Button>
       </div>
     </Form>
   );

@@ -1,9 +1,40 @@
 "use client";
-import React from 'react';
+import React from "react";
+import { useRouter } from "next/navigation";
 
-export default function Button({ children, className = '', ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "warning" | "success" | "secondary";
+  href?: string;
+  onClick?: () => void;
+};
+
+export default function Button({
+  children,
+  className = "",
+  variant = "warning",
+  href,
+  onClick,
+  ...rest
+}: ButtonProps) {
+  const router = useRouter();
+
+  const variantClasses =
+    {
+      primary: "bg-blue-600 text-white hover:bg-blue-700",
+      warning: "bg-yellow-500 text-black hover:bg-yellow-600",
+      success: "bg-green-600 text-white hover:bg-green-700",
+      secondary: "bg-gray-500 text-white hover:bg-gray-600",
+    }[variant] || "bg-slate-900 text-white";
+
+  const combinedClasses = `px-6 py-3 rounded-xl transition ${variantClasses} ${className}`;
+
+  const handleClick = () => {
+    if (onClick) onClick();
+    if (href) router.push(href);
+  };
+
   return (
-    <button {...rest} className={"inline-flex items-center gap-2 rounded px-4 py-2 bg-slate-900 text-white " + className}>
+    <button {...rest} onClick={handleClick} className={combinedClasses}>
       {children}
     </button>
   );
