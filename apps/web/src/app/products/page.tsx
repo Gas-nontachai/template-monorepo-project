@@ -5,6 +5,7 @@ import ProductList from "@/components/products/ProductList";
 import { useProducts } from "@/hooks/useProducts";
 import { Product } from "@/types/product";
 import Button from "@/components/ui/Button";
+import Label from "@/components/ui/Label";
 
 export default function ProductsPage() {
   const { products, loading, createProduct, updateProduct, deleteProduct } =
@@ -13,7 +14,7 @@ export default function ProductsPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Products</h1>
+      <Label className="text-2xl font-bold">Products</Label>
 
       <Button variant="warning" href="/">
         back

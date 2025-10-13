@@ -12,11 +12,9 @@ import {
 export function PhotoboothNavbar() {
   return (
     <div className="border-b border-yellow-500/50 bg-gray-950 shadow-xl">
-      {" "}
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center space-x-2">
           <div className="text-2xl font-black tracking-wider text-yellow-400">
-            {" "}
             Photo<span className="text-white">Booth</span>
           </div>
         </div>

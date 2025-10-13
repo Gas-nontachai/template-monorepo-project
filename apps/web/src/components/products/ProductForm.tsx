@@ -8,6 +8,7 @@ import { Form, FormField, FormLabel, FormMessage } from "@/components/ui/Form";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
 import Button from "@/components/ui/Button";
+import Label from "@/components/ui/Label";
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -72,9 +73,9 @@ export default function ProductForm({
   return (
     <Form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="max-w-2xl mx-auto p-7 bg-white rounded-2xl shadow-lg space-y-6">
-        <h2 className="text-5xl font-semibold flex justify-center text-gray-800">
+        <Label className="text-5xl font-semibold text-gray-800">
           {editing ? "Edit Product" : "Create Product"}
-        </h2>
+        </Label>
 
         {/* Name */}
         <FormField>
@@ -156,9 +157,11 @@ export default function ProductForm({
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+          className="w-full py-3 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
         >
-          {editing ? "Update Product" : "Create Product"}
+          <Label className="text-white font-semibold text-center select-text">
+            {editing ? "Update Product" : "Create Product"}
+          </Label>
         </Button>
       </div>
     </Form>

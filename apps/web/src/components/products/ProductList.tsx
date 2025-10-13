@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { Product } from "@/types/product";
+import Button from "@/components/ui/Button";
+import Label from "@/components/ui/Label";
 
 type Props = {
   products: Product[];
@@ -17,24 +19,20 @@ export default function ProductList({ products, onEdit, onDelete }: Props) {
           className="w-full bg-white rounded-2xl shadow-md flex justify-between items-center p-4 transition-shadow hover:shadow-lg"
         >
           <div className="flex-1">
-            <div className="font-semibold text-gray-800">
+            <Label className="font-semibold text-gray-800">
               {p.name} - ${(p.priceCents / 100).toFixed(2)}
-            </div>
-            <div className="text-sm text-gray-700 mt-1">{p.description}</div>
+            </Label>
+            <Label className="text-sm text-gray-700 mt-1">
+              {p.description}
+            </Label>
           </div>
           <div className="flex gap-2 ml-4">
-            <button
-              onClick={() => onEdit(p)}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors"
-            >
+            <Button onClick={() => onEdit(p)} variant="warning">
               Edit
-            </button>
-            <button
-              onClick={() => onDelete(p.id)}
-              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
-            >
+            </Button>
+            <Button onClick={() => onDelete(p.id)} variant="secondary">
               Delete
-            </button>
+            </Button>
           </div>
         </li>
       ))}
