@@ -16,7 +16,10 @@
     "lint:fix": "turbo run lint -- --fix",
     "lint-staged": "lint-staged",
     "commitlint": "commitlint --config commitlint.config.cjs",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "install:all": "npm i --workspace=apps/api && npm i --workspace=apps/web",
+    "install:api": "npm i --workspace=apps/api",
+    "install:web": "npm i --workspace=apps/web"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,css,md}": [
