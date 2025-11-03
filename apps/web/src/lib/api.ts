@@ -1,13 +1,12 @@
 export const apiFetch = async (path: string, options?: RequestInit) => {
-  const base = process.env.NEXT_PUBLIC_API_BASE || process.env.API_BASE;
+  const base = process.env.NEXT_PUBLIC_API_BASE;
   const url = base ? `${base}${path}` : path;
-
   const hasBody = !!options?.body;
 
   const res = await fetch(url, {
     ...options,
     headers: {
-      ...(hasBody ? { 'content-type': 'application/json' } : {}),
+      ...(hasBody ? { "content-type": "application/json" } : {}),
       ...(options?.headers || {}),
     },
   });
